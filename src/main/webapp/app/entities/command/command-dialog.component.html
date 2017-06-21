@@ -26,8 +26,7 @@
 
         <div class="form-group">
             <label jhiTranslate="domotikWebApp.command.model" for="field_model">Model</label>
-            <select class="form-control" id="field_model" name="model" [(ngModel)]="command.model" >
-                <option [ngValue]="null"></option>
+            <select class="form-control" id="field_model" name="model" [(ngModel)]="command.model" required>
                 <option [ngValue]="modelOption.id === command.model?.id ? command.model : modelOption" *ngFor="let modelOption of models; trackBy: trackModelById">{{modelOption.name}}</option>
             </select>
         </div>
