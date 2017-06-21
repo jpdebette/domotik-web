@@ -7,6 +7,11 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
+                "brand": "Brand",
+                "model": "Model",
+                "smartDevice": "Smart Device",
+                "command": "Command",
+                "commandParameter": "Command Parameter",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

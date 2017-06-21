@@ -1,0 +1,22 @@
+{
+    "domotikWebApp": {
+        "commandParameter" : {
+            "home": {
+                "title": "CommandParameters",
+                "createLabel": "Créer un nouveau Command Parameter",
+                "createOrEditLabel": "Créer ou éditer un Command Parameter"
+            },
+            "created": "Un nouveau Command Parameter a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Command Parameter avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Command Parameter avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Command Parameter {{ id }} ?"
+            },
+            "detail": {
+                "title": "Command Parameter"
+            },
+            "name": "Name",
+            "command": "Command"
+        }
+    }
+}

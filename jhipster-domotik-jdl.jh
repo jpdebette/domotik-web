@@ -1,0 +1,35 @@
+entity Brand {
+    name String required
+}
+
+entity Model {
+    name String required
+}
+
+entity SmartDevice {
+    name String required
+}
+
+entity Command {
+    name String required
+}
+
+entity CommandParameter {
+    name String required
+}
+
+relationship ManyToOne {
+	Model{brand(name)} to Brand
+}
+
+relationship ManyToOne {
+	SmartDevice{model(name)} to Model
+}
+
+relationship ManyToOne {
+	Command{Model(name)} to Model
+}
+
+relationship ManyToOne {
+    CommandParameter{command(name)} to Command
+}

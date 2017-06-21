@@ -1,0 +1,31 @@
+
+<div *ngIf="smartDevice">
+    <h2><span jhiTranslate="domotikWebApp.smartDevice.detail.title">Smart Device</span> {{smartDevice.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="domotikWebApp.smartDevice.name">Name</span></dt>
+        <dd>
+            <span>{{smartDevice.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="domotikWebApp.smartDevice.model">Model</span></dt>
+        <dd>
+            <div *ngIf="smartDevice.model">
+                <a [routerLink]="['/model', smartDevice.model?.id]">{{smartDevice.model?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'smart-device/'+ smartDevice.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

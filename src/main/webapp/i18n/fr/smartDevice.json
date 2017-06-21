@@ -1,0 +1,22 @@
+{
+    "domotikWebApp": {
+        "smartDevice" : {
+            "home": {
+                "title": "SmartDevices",
+                "createLabel": "Créer un nouveau Smart Device",
+                "createOrEditLabel": "Créer ou éditer un Smart Device"
+            },
+            "created": "Un nouveau Smart Device a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Smart Device avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Smart Device avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Smart Device {{ id }} ?"
+            },
+            "detail": {
+                "title": "Smart Device"
+            },
+            "name": "Name",
+            "model": "Model"
+        }
+    }
+}
