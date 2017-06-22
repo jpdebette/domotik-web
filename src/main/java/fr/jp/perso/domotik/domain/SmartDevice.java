@@ -1,9 +1,6 @@
 package fr.jp.perso.domotik.domain;
 
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A SmartDevice.
@@ -27,6 +26,10 @@ public class SmartDevice implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "ip_address", nullable = false)
+    private String ipAddress;
+
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -40,6 +43,19 @@ public class SmartDevice implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public SmartDevice ipAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+        return this;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public String getName() {
@@ -92,6 +108,7 @@ public class SmartDevice implements Serializable {
     public String toString() {
         return "SmartDevice{" +
             "id=" + getId() +
+            ", ipAddress='" + getIpAddress() + "'" +
             ", name='" + getName() + "'" +
             "}";
     }

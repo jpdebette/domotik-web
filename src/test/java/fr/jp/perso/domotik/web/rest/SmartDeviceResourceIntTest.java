@@ -37,6 +37,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DomotikWebApp.class)
 public class SmartDeviceResourceIntTest {
 
+    private static final String DEFAULT_IP_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_IP_ADDRESS = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -77,6 +80,7 @@ public class SmartDeviceResourceIntTest {
      */
     public static SmartDevice createEntity(EntityManager em) {
         SmartDevice smartDevice = new SmartDevice()
+            .ipAddress(DEFAULT_IP_ADDRESS)
             .name(DEFAULT_NAME);
         return smartDevice;
     }
@@ -101,6 +105,7 @@ public class SmartDeviceResourceIntTest {
         List<SmartDevice> smartDeviceList = smartDeviceRepository.findAll();
         assertThat(smartDeviceList).hasSize(databaseSizeBeforeCreate + 1);
         SmartDevice testSmartDevice = smartDeviceList.get(smartDeviceList.size() - 1);
+        assertThat(testSmartDevice.getIpAddress()).isEqualTo(DEFAULT_IP_ADDRESS);
         assertThat(testSmartDevice.getName()).isEqualTo(DEFAULT_NAME);
     }
 
@@ -121,6 +126,24 @@ public class SmartDeviceResourceIntTest {
         // Validate the Alice in the database
         List<SmartDevice> smartDeviceList = smartDeviceRepository.findAll();
         assertThat(smartDeviceList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    public void checkIpAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = smartDeviceRepository.findAll().size();
+        // set the field null
+        smartDevice.setIpAddress(null);
+
+        // Create the SmartDevice, which fails.
+
+        restSmartDeviceMockMvc.perform(post("/api/smart-devices")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(smartDevice)))
+            .andExpect(status().isBadRequest());
+
+        List<SmartDevice> smartDeviceList = smartDeviceRepository.findAll();
+        assertThat(smartDeviceList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -152,6 +175,7 @@ public class SmartDeviceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(smartDevice.getId().intValue())))
+            .andExpect(jsonPath("$.[*].ipAddress").value(hasItem(DEFAULT_IP_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
@@ -166,6 +190,7 @@ public class SmartDeviceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(smartDevice.getId().intValue()))
+            .andExpect(jsonPath("$.ipAddress").value(DEFAULT_IP_ADDRESS.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
@@ -187,6 +212,7 @@ public class SmartDeviceResourceIntTest {
         // Update the smartDevice
         SmartDevice updatedSmartDevice = smartDeviceRepository.findOne(smartDevice.getId());
         updatedSmartDevice
+            .ipAddress(UPDATED_IP_ADDRESS)
             .name(UPDATED_NAME);
 
         restSmartDeviceMockMvc.perform(put("/api/smart-devices")
@@ -198,6 +224,7 @@ public class SmartDeviceResourceIntTest {
         List<SmartDevice> smartDeviceList = smartDeviceRepository.findAll();
         assertThat(smartDeviceList).hasSize(databaseSizeBeforeUpdate);
         SmartDevice testSmartDevice = smartDeviceList.get(smartDeviceList.size() - 1);
+        assertThat(testSmartDevice.getIpAddress()).isEqualTo(UPDATED_IP_ADDRESS);
         assertThat(testSmartDevice.getName()).isEqualTo(UPDATED_NAME);
     }
 
