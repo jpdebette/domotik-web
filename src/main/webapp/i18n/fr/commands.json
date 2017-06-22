@@ -1,0 +1,12 @@
+{
+    "commands": {
+        "title": "Prêt à envoyer une commande ?",
+        "label": {
+            "command": "Commande",
+            "smartDevice": "Smart device"
+        },
+        "action": {
+            "send": "Envoyer"
+        }
+    }
+}
