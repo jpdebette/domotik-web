@@ -17,6 +17,7 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="domotikWebApp.smartDevice.ipAddress">Ip Address</span></th>
             <th><span jhiTranslate="domotikWebApp.smartDevice.name">Name</span></th>
             <th><span jhiTranslate="domotikWebApp.smartDevice.model">Model</span></th>
             <th></th>
@@ -25,6 +26,7 @@
             <tbody>
             <tr *ngFor="let smartDevice of smartDevices ;trackBy: trackId">
                 <td><a [routerLink]="['../smart-device', smartDevice.id ]">{{smartDevice.id}}</a></td>
+                <td>{{smartDevice.ipAddress}}</td>
                 <td>{{smartDevice.name}}</td>
                 <td>
                     <div *ngIf="smartDevice.model">

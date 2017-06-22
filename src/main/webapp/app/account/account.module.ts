@@ -4,14 +4,10 @@ import { RouterModule } from '@angular/router';
 import { DomotikWebSharedModule } from '../shared';
 
 import {
-    Register,
-    ActivateService,
     PasswordService,
     PasswordResetInitService,
     PasswordResetFinishService,
     PasswordStrengthBarComponent,
-    RegisterComponent,
-    ActivateComponent,
     PasswordComponent,
     PasswordResetInitComponent,
     PasswordResetFinishComponent,
@@ -25,8 +21,6 @@ import {
         RouterModule.forRoot(accountState, { useHash: true })
     ],
     declarations: [
-        ActivateComponent,
-        RegisterComponent,
         PasswordComponent,
         PasswordStrengthBarComponent,
         PasswordResetInitComponent,
@@ -34,8 +28,6 @@ import {
         SettingsComponent
     ],
     providers: [
-        Register,
-        ActivateService,
         PasswordService,
         PasswordResetInitService,
         PasswordResetFinishService
