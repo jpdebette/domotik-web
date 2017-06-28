@@ -1,5 +1,5 @@
 {
-    "commands": {
+    "order": {
         "title": "Ready to send a command?",
         "label": {
             "command": "Command",

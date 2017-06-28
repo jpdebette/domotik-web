@@ -1,0 +1,26 @@
+<form name="orderForm" role="form" novalidate (ngSubmit)="send()" #orderForm="ngForm">
+    <div class="modal-header">
+        <h1 jhiTranslate="order.title">Ready to send a command?</h1>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label jhiTranslate="order.label.smartDevice" for="field_smartDevice">Smart device</label>
+            <select class="form-control" id="field_smartDevice" name="smartDevice" [(ngModel)]="order.smartDevice" required>
+                <option [ngValue]="smartDevice" *ngFor="let smartDevice of smartDevices; trackBy: trackSmartDeviceById">{{smartDevice.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label jhiTranslate="order.label.command">Commande</label>
+        <input type="text" class="form-control" id="field_text" name="text" [(ngModel)]="order.text" required />
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="orderForm.form.invalid" class="btn btn-primary">
+            <span class="fa fa-send"></span>&nbsp;<span jhiTranslate="order.action.send">Save</span>
+        </button>
+    </div>
+</form>

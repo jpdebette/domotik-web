@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="['/', { outlets: { popup: ['commands'] } }]" (click)="collapseNavbar()">
+                <a class="nav-link" (click)="displayCommandSender()">
                     <i class="fa fa-send" aria-hidden="true"></i>
                     <span jhiTranslate="global.menu.commands">Command</span>
                 </a>
