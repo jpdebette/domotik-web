@@ -5,6 +5,7 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import { OrderPopupService } from '../../order';
 
 import { VERSION, DEBUG_INFO_ENABLED } from '../../app.constants';
 
@@ -30,6 +31,7 @@ export class NavbarComponent implements OnInit {
         private languageHelper: JhiLanguageHelper,
         private principal: Principal,
         private loginModalService: LoginModalService,
+        private orderPopupService: OrderPopupService,
         private profileService: ProfileService,
         private router: Router
     ) {
@@ -76,5 +78,9 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
+
+    displayCommandSender() {
+        this.modalRef = this.orderPopupService.open();
     }
 }

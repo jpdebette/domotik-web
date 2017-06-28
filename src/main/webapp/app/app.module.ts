@@ -6,7 +6,7 @@ import { Ng2Webstorage } from 'ng2-webstorage';
 
 import { DomotikWebSharedModule, UserRouteAccessService } from './shared';
 import { DomotikWebHomeModule } from './home/home.module';
-import { DomotikWebCommandsModule } from './commands/commands.module';
+import { DomotikWebOrderModule } from './order/order.module';
 import { DomotikWebAdminModule } from './admin/admin.module';
 import { DomotikWebAccountModule } from './account/account.module';
 import { DomotikWebEntityModule } from './entities/entity.module';
@@ -34,7 +34,7 @@ import {
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
         DomotikWebSharedModule,
         DomotikWebHomeModule,
-        DomotikWebCommandsModule,
+        DomotikWebOrderModule,
         DomotikWebAdminModule,
         DomotikWebAccountModule,
         DomotikWebEntityModule,
