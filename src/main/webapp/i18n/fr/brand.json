@@ -2,20 +2,20 @@
     "domotikWebApp": {
         "brand" : {
             "home": {
-                "title": "Brands",
-                "createLabel": "Créer un nouveau Brand",
-                "createOrEditLabel": "Créer ou éditer un Brand"
+                "title": "Marques",
+                "createLabel": "Créer une nouvelle marque",
+                "createOrEditLabel": "Créer ou éditer une marque"
             },
-            "created": "Un nouveau Brand a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Brand avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Brand avec l'identifiant {{ param }} a été supprimé",
+            "created": "Une nouvelle marque a été créée avec l'identifiant {{ param }}",
+            "updated": "La marque avec l'identifiant {{ param }} a été mise à jour",
+            "deleted": "La marque avec l'identifiant {{ param }} a été supprimée",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Brand {{ id }} ?"
+                "question": "Êtes-vous certain de vouloir supprimer la marque {{ id }} ?"
             },
             "detail": {
-                "title": "Brand"
+                "title": "Marque"
             },
-            "name": "Name"
+            "name": "Nom"
         }
     }
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { JhiAlertService } from 'ng-jhipster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Rx';
 
 import { ResponseWrapper } from '../shared';
 
 import { Order } from './order.model';
+import { OrderService } from './order.service';
 
 import { SmartDevice } from '../entities/smart-device/smart-device.model';
 import { SmartDeviceService } from '../entities/smart-device/smart-device.service';
@@ -15,30 +17,30 @@ import { SmartDeviceService } from '../entities/smart-device/smart-device.servic
     styleUrls: [
         'order.css'
     ]
-
 })
 export class OrderComponent implements OnInit {
     smartDevices: SmartDevice[];
     order: Order;
+    isSending: boolean;
+    result: string;
 
     constructor(
         private smartDeviceService: SmartDeviceService,
         private alertService: JhiAlertService,
+        private orderService: OrderService,
         public activeModal: NgbActiveModal
     ) {
     }
 
     ngOnInit() {
+        this.isSending = false;
         this.order = new Order();
+        this.result = '';
         this.smartDeviceService.query().subscribe((res: ResponseWrapper) => {
                 this.smartDevices = res.json;
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
-    }
-
-    private onError(error) {
-        this.alertService.error(error.message, null, null);
     }
 
     trackSmartDeviceById(index: number, item: SmartDevice) {
@@ -50,8 +52,33 @@ export class OrderComponent implements OnInit {
     }
 
     send() {
-        this.activeModal.dismiss('Order sent');
-        console.log('smart device id: ' + this.order.smartDevice.id);
-        console.log('command: ' + this.order.text);
+        this.result = '';
+        this.isSending = true;
+        this.subscribeToSendResponse(this.orderService.send(this.order));
+    }
+
+    private subscribeToSendResponse(result: Observable<string>) {
+        result.subscribe((res: string) =>
+            this.onSendSuccess(res), (res: Response) => this.onSendError(res));
+    }
+
+    private onSendSuccess(result: string) {
+        this.alertService.success('order.sent', null, null);
+        this.result = result;
+        this.isSending = false;
+    }
+
+    private onSendError(error) {
+        try {
+            error.json();
+        } catch (exception) {
+            this.onError(error);
+        }
+        this.isSending = false;
+        this.result = error;
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
     }
 }

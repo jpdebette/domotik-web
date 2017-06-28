@@ -2,22 +2,22 @@
     "domotikWebApp": {
         "smartDevice" : {
             "home": {
-                "title": "SmartDevices",
-                "createLabel": "Créer un nouveau Smart Device",
-                "createOrEditLabel": "Créer ou éditer un Smart Device"
+                "title": "Appareils intelligents",
+                "createLabel": "Créer un nouvel appareil intelligent",
+                "createOrEditLabel": "Créer ou éditer un appareil intelligent"
             },
-            "created": "Un nouveau Smart Device a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Smart Device avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Smart Device avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouvel appareil intelligent a été créé avec l'identifiant {{ param }}",
+            "updated": "L'appareil intelligent avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "L'appareil intelligent avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Smart Device {{ id }} ?"
+                "question": "Êtes-vous certain de vouloir supprimer l'appareil intelligent {{ id }} ?"
             },
             "detail": {
-                "title": "Smart Device"
+                "title": "Appareil intelligent"
             },
-            "ipAddress": "Ip Address",
-            "name": "Name",
-            "model": "Model"
+            "ipAddress": "Adresse IP",
+            "name": "Nom",
+            "model": "Modèle"
         }
     }
 }

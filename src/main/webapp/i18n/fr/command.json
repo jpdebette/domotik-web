@@ -2,21 +2,21 @@
     "domotikWebApp": {
         "command" : {
             "home": {
-                "title": "Commands",
-                "createLabel": "Créer un nouveau Command",
-                "createOrEditLabel": "Créer ou éditer un Command"
+                "title": "Commandes",
+                "createLabel": "Créer une nouvelle commande",
+                "createOrEditLabel": "Créer ou éditer une commande"
             },
-            "created": "Un nouveau Command a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Command avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Command avec l'identifiant {{ param }} a été supprimé",
+            "created": "Une nouvelle commande a été créée avec l'identifiant {{ param }}",
+            "updated": "La commande avec l'identifiant {{ param }} a été mise à jour",
+            "deleted": "La commande avec l'identifiant {{ param }} a été supprimée",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Command {{ id }} ?"
+                "question": "Êtes-vous certain de vouloir supprimer la commande {{ id }} ?"
             },
             "detail": {
-                "title": "Command"
+                "title": "Commande"
             },
-            "name": "Name",
-            "model": "Model"
+            "name": "Nom",
+            "model": "Modèle"
         }
     }
 }

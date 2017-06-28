@@ -5,6 +5,7 @@ import { DomotikWebSharedModule } from '../shared';
 import {
     OrderComponent,
     OrderPopupService,
+    OrderService,
 } from './';
 
 @NgModule({
@@ -18,6 +19,7 @@ import {
         OrderComponent,
     ],
     providers: [
+        OrderService,
         OrderPopupService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -2,21 +2,21 @@
     "domotikWebApp": {
         "model" : {
             "home": {
-                "title": "Models",
-                "createLabel": "Créer un nouveau Model",
-                "createOrEditLabel": "Créer ou éditer un Model"
+                "title": "Modèles",
+                "createLabel": "Créer un nouveau modèle",
+                "createOrEditLabel": "Créer ou éditer un modèle"
             },
-            "created": "Un nouveau Model a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Model avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Model avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau modèle a été créé avec l'identifiant {{ param }}",
+            "updated": "Le modèle avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le modèle avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Model {{ id }} ?"
+                "question": "Êtes-vous certain de vouloir supprimer le Model {{ id }} ?"
             },
             "detail": {
-                "title": "Model"
+                "title": "Modèle"
             },
-            "name": "Name",
-            "brand": "Brand"
+            "name": "Nom",
+            "brand": "Marque"
         }
     }
 }

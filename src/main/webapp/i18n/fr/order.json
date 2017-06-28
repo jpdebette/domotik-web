@@ -3,10 +3,12 @@
         "title": "Prêt à envoyer une commande ?",
         "label": {
             "command": "Commande",
-            "smartDevice": "Smart device"
+            "smartDevice": "Smart device",
+            "result": "Résultat"
         },
         "action": {
             "send": "Envoyer"
-        }
+        },
+        "sent": "Une commande a été envoyée."
     }
 }

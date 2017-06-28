@@ -3,10 +3,12 @@
         "title": "Ready to send a command?",
         "label": {
             "command": "Command",
-            "smartDevice": "Smart device"
+            "smartDevice": "Smart device",
+            "result": "Result"
         },
         "action": {
             "send": "Send"
-        }
+        },
+        "sent": "An order was sent."
     }
 }

@@ -10,6 +10,12 @@ Main page styles
     background-size: contain;
 }
 
+.result-container {
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    font-family: monospace,monospace;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2),
