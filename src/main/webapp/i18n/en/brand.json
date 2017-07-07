@@ -15,7 +15,8 @@
             "detail": {
                 "title": "Brand"
             },
-            "name": "Name"
+            "name": "Name",
+            "api": "API URL"
         }
     }
 }

@@ -1,10 +1,16 @@
 package fr.jp.perso.domotik.domain;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * A Brand.
@@ -22,6 +28,10 @@ public class Brand implements Serializable {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @NotNull
+    @Column(name = "api", nullable = false)
+    private String api;
 
     public Long getId() {
         return id;
@@ -57,6 +67,14 @@ public class Brand implements Serializable {
             return false;
         }
         return Objects.equals(getId(), brand.getId());
+    }
+
+    public String getApi() {
+        return api;
+    }
+
+    public void setApi(String api) {
+        this.api = api;
     }
 
     @Override
