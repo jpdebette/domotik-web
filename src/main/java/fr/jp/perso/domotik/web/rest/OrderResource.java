@@ -2,6 +2,7 @@ package fr.jp.perso.domotik.web.rest;
 
 import java.net.URISyntaxException;
 import java.util.Optional;
+import java.util.StringJoiner;
 
 import javax.validation.Valid;
 
@@ -21,8 +22,6 @@ import org.springframework.web.client.RestTemplate;
 import com.codahale.metrics.annotation.Timed;
 
 import fr.jp.perso.domotik.ApiResponseDto;
-import fr.jp.perso.domotik.Model;
-import fr.jp.perso.domotik.SmartDeviceDto;
 import fr.jp.perso.domotik.domain.Order;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -46,17 +45,20 @@ public class OrderResource {
     public ResponseEntity<String> sendOrder(@Valid @RequestBody Order order) throws URISyntaxException {
         log.debug("REST request to send Order : {}", order);
 
-        String apiUrl = order.getSmartDevice().getModel().getBrand().getApi();
-        String command = order.getText();
-        SmartDeviceDto smartDeviceDto = new SmartDeviceDto(Model.TpLink_HS105, order.getSmartDevice().getIpAddress());
+        StringJoiner urlJoiner = new StringJoiner("/");
+        urlJoiner.add("http://localhost:10081");
+        urlJoiner.add(order.getSmartDevice().getModel().getBrand().getApi());
+        urlJoiner.add(order.getSmartDevice().getModel().getName());
+        urlJoiner.add(order.getSmartDevice().getIpAddress());
+        urlJoiner.add(order.getText());
 
         RestTemplate restTemplate = new RestTemplate();
         String response;
         try {
-            ApiResponseDto apiResponse = restTemplate.postForObject("http://localhost:10081/" + apiUrl + "/" + command, smartDeviceDto, ApiResponseDto.class);
+            ApiResponseDto apiResponse = restTemplate.getForObject(urlJoiner.toString(), ApiResponseDto.class);
             response = apiResponse.getResponse();
         } catch (Exception ex) {
-            response = processError(ex, command);
+            response = processError(ex, order.getText());
         }
 
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(response));
