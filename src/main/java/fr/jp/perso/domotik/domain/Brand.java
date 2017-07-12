@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "brand")
 public class Brand implements Serializable {
-
+    public static final String ENTITY_NAME = "brand";
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -32,6 +32,10 @@ export class BrandService {
         });
     }
 
+    sync(id: number): Observable<Response> {
+        return this.http.get(`${this.resourceUrl}/${id}/sync`);
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

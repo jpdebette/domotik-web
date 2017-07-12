@@ -1,9 +1,12 @@
 package fr.jp.perso.domotik.repository;
 
-import fr.jp.perso.domotik.domain.Command;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import fr.jp.perso.domotik.domain.Command;
+import fr.jp.perso.domotik.domain.Model;
 
 
 /**
@@ -12,5 +15,5 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CommandRepository extends JpaRepository<Command,Long> {
-    
+    List<Command> findAllCommandsByModel(Model model);
 }

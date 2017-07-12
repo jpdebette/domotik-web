@@ -12,6 +12,7 @@
             "delete": {
                 "question": "Êtes-vous certain de vouloir supprimer la marque {{ id }} ?"
             },
+            "sync": "Synchronize",
             "detail": {
                 "title": "Marque"
             },

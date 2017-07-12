@@ -12,6 +12,7 @@
             "delete": {
                 "question": "Are you sure you want to delete Brand {{ id }}?"
             },
+            "sync": "Synchronize",
             "detail": {
                 "title": "Brand"
             },

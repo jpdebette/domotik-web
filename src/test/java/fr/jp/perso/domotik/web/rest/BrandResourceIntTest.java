@@ -1,10 +1,18 @@
 package fr.jp.perso.domotik.web.rest;
 
-import fr.jp.perso.domotik.DomotikWebApp;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import fr.jp.perso.domotik.domain.Brand;
-import fr.jp.perso.domotik.repository.BrandRepository;
-import fr.jp.perso.domotik.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +28,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import fr.jp.perso.domotik.DomotikWebApp;
+import fr.jp.perso.domotik.domain.Brand;
+import fr.jp.perso.domotik.repository.BrandRepository;
+import fr.jp.perso.domotik.service.BrandService;
+import fr.jp.perso.domotik.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the BrandResource REST controller.
@@ -42,6 +48,9 @@ public class BrandResourceIntTest {
 
     @Autowired
     private BrandRepository brandRepository;
+
+    @Autowired
+    private BrandService brandService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -62,7 +71,7 @@ public class BrandResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        BrandResource brandResource = new BrandResource(brandRepository);
+        BrandResource brandResource = new BrandResource(brandService);
         this.restBrandMockMvc = MockMvcBuilders.standaloneSetup(brandResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

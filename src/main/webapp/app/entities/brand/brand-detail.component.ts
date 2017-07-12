@@ -50,4 +50,10 @@ export class BrandDetailComponent implements OnInit, OnDestroy {
             (response) => this.load(this.brand.id)
         );
     }
+
+    sync() {
+        this.brandService.sync(this.brand.id).subscribe((response) => {
+
+        });
+    }
 }

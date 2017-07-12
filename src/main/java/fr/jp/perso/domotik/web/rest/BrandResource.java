@@ -1,22 +1,30 @@
 package fr.jp.perso.domotik.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fr.jp.perso.domotik.domain.Brand;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
-import fr.jp.perso.domotik.repository.BrandRepository;
-import fr.jp.perso.domotik.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.codahale.metrics.annotation.Timed;
 
-import java.util.List;
-import java.util.Optional;
+import fr.jp.perso.domotik.domain.Brand;
+import fr.jp.perso.domotik.service.BrandService;
+import fr.jp.perso.domotik.web.rest.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Brand.
@@ -24,15 +32,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class BrandResource {
-
     private final Logger log = LoggerFactory.getLogger(BrandResource.class);
+    private final BrandService brandService;
 
-    private static final String ENTITY_NAME = "brand";
-
-    private final BrandRepository brandRepository;
-
-    public BrandResource(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public BrandResource(BrandService brandService) {
+        this.brandService = brandService;
     }
 
     /**
@@ -45,14 +49,18 @@ public class BrandResource {
     @PostMapping("/brands")
     @Timed
     public ResponseEntity<Brand> createBrand(@Valid @RequestBody Brand brand) throws URISyntaxException {
-        log.debug("REST request to save Brand : {}", brand);
-        if (brand.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new brand cannot already have an ID")).body(null);
+        try {
+            log.debug("REST request to save Brand : {}", brand);
+            if(brand.getId() != null) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Brand.ENTITY_NAME, "idexists", "A new brand cannot already have an ID")).body(null);
+            }
+            Brand result = brandService.createBrand(brand);
+            return ResponseEntity.created(new URI("/api/brands/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(Brand.ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } catch(Exception ex) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Brand.ENTITY_NAME, "error", ex.getMessage())).body(null);
         }
-        Brand result = brandRepository.save(brand);
-        return ResponseEntity.created(new URI("/api/brands/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
     }
 
     /**
@@ -68,13 +76,26 @@ public class BrandResource {
     @Timed
     public ResponseEntity<Brand> updateBrand(@Valid @RequestBody Brand brand) throws URISyntaxException {
         log.debug("REST request to update Brand : {}", brand);
-        if (brand.getId() == null) {
+        if(brand.getId() == null) {
             return createBrand(brand);
         }
-        Brand result = brandRepository.save(brand);
+        Brand result = brandService.save(brand);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brand.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(Brand.ENTITY_NAME, brand.getId().toString()))
             .body(result);
+    }
+
+    @GetMapping("/brands/{id}/sync")
+    @Timed
+    public ResponseEntity<Void> synchronizeBrand(@PathVariable Long id) throws URISyntaxException {
+        try {
+            log.debug("REST request to sync Brand id : {}", id);
+            Brand brand = brandService.findOne(id);
+            brandService.synchronizeBrand(brand);
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(Brand.ENTITY_NAME, brand.getId().toString())).build();
+        } catch(Exception ex) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(Brand.ENTITY_NAME, "error", ex.getMessage())).body(null);
+        }
     }
 
     /**
@@ -86,7 +107,7 @@ public class BrandResource {
     @Timed
     public List<Brand> getAllBrands() {
         log.debug("REST request to get all Brands");
-        return brandRepository.findAll();
+        return brandService.findAll();
     }
 
     /**
@@ -99,7 +120,7 @@ public class BrandResource {
     @Timed
     public ResponseEntity<Brand> getBrand(@PathVariable Long id) {
         log.debug("REST request to get Brand : {}", id);
-        Brand brand = brandRepository.findOne(id);
+        Brand brand = brandService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(brand));
     }
 
@@ -113,7 +134,7 @@ public class BrandResource {
     @Timed
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         log.debug("REST request to delete Brand : {}", id);
-        brandRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        brandService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(Brand.ENTITY_NAME, id.toString())).build();
     }
 }
