@@ -11,8 +11,10 @@
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="order.label.command">Commande</label>
-            <input type="text" class="form-control" id="field_text" name="text" [(ngModel)]="order.text" required />
+            <label jhiTranslate="order.label.command" for="field_command">Command</label>
+            <select class="form-control" id="field_command" name="command" [(ngModel)]="order.command" required>
+                <option [ngValue]="command" *ngFor="let command of commands; trackBy: trackCommandById">{{command.name}}</option>
+            </select>
         </div>
         <div class="form-group" >
             <label jhiTranslate="order.label.result">Commande</label>

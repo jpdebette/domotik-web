@@ -11,6 +11,9 @@ import { OrderService } from './order.service';
 import { SmartDevice } from '../entities/smart-device/smart-device.model';
 import { SmartDeviceService } from '../entities/smart-device/smart-device.service';
 
+import { Command } from '../entities/command/command.model';
+import { CommandService } from '../entities/command/command.service';
+
 @Component({
     selector: 'jhi-order',
     templateUrl: './order.component.html',
@@ -20,12 +23,14 @@ import { SmartDeviceService } from '../entities/smart-device/smart-device.servic
 })
 export class OrderComponent implements OnInit {
     smartDevices: SmartDevice[];
+    commands: Command[];
     order: Order;
     isSending: boolean;
     result: string;
 
     constructor(
         private smartDeviceService: SmartDeviceService,
+        private commandService: CommandService,
         private alertService: JhiAlertService,
         private orderService: OrderService,
         public activeModal: NgbActiveModal
@@ -41,9 +46,18 @@ export class OrderComponent implements OnInit {
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
+        this.commandService.query().subscribe((res: ResponseWrapper) => {
+                this.commands = res.json;
+            },
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 
     trackSmartDeviceById(index: number, item: SmartDevice) {
+        return item.id;
+    }
+
+    trackCommandById(index: number, item: Command) {
         return item.id;
     }
 
