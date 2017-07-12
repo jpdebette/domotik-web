@@ -6,6 +6,10 @@ import java.util.StringJoiner;
 
 import javax.validation.Valid;
 
+import com.codahale.metrics.annotation.Timed;
+import fr.jp.perso.domotik.ApiResponseDto;
+import fr.jp.perso.domotik.domain.Order;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -18,12 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import com.codahale.metrics.annotation.Timed;
-
-import fr.jp.perso.domotik.ApiResponseDto;
-import fr.jp.perso.domotik.domain.Order;
-import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Brand.
@@ -50,7 +48,7 @@ public class OrderResource {
         urlJoiner.add(order.getSmartDevice().getModel().getBrand().getApi());
         urlJoiner.add(order.getSmartDevice().getModel().getName());
         urlJoiner.add(order.getSmartDevice().getIpAddress());
-        urlJoiner.add(order.getText());
+        urlJoiner.add(order.getCommand().getName());
 
         RestTemplate restTemplate = new RestTemplate();
         String response;
@@ -58,7 +56,7 @@ public class OrderResource {
             ApiResponseDto apiResponse = restTemplate.getForObject(urlJoiner.toString(), ApiResponseDto.class);
             response = apiResponse.getResponse();
         } catch (Exception ex) {
-            response = processError(ex, order.getText());
+            response = processError(ex, order.getCommand().getName());
         }
 
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(response));
@@ -67,7 +65,7 @@ public class OrderResource {
     private String processError(Exception initialError, String command) {
         String response = initialError.getMessage();
         if (initialError instanceof HttpClientErrorException) {
-            if (((HttpClientErrorException)initialError).getStatusCode() == HttpStatus.NOT_FOUND) {
+            if (((HttpClientErrorException) initialError).getStatusCode() == HttpStatus.NOT_FOUND) {
                 response = String.format("The command '%s' does not exist: %s", command, initialError.getMessage());
             }
         } else {
@@ -77,7 +75,7 @@ public class OrderResource {
         JSONObject jsonResponse = new JSONObject();
         try {
             jsonResponse.put("Error", response);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             log.error("Error converting response into json: " + response);
         }
 
